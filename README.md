@@ -29,14 +29,21 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| Command                | Action                                                           |
+| :--------------------- | :--------------------------------------------------------------- |
+| `pnpm install`         | Install dependencies                                             |
+| `pnpm dev`             | Start local dev server at `localhost:4321`                       |
+| `pnpm build`           | Build production site to `./dist/`                               |
+| `pnpm preview`         | Preview the production build locally                             |
+| `pnpm typecheck`       | Type-check Astro/TS (`astro check`)                              |
+| `pnpm lint`            | Lint the codebase with ESLint                                    |
+| `pnpm lint:fix`        | Lint + auto-fix where possible                                   |
+| `pnpm format`          | Format files with Prettier (writes changes)                      |
+| `pnpm format:check`    | Check formatting with Prettier (no writes; CI-friendly)          |
+| `pnpm test`            | Run tests with Vitest                                            |
+| `pnpm check`           | Run `typecheck`, `lint`, `format:check`, and `test` (all-in-one) |
+| `pnpm astro ...`       | Run Astro CLI commands (e.g. `astro add`, `astro check`)         |
+| `pnpm astro -- --help` | Show Astro CLI help                                              |
 
 ## 👀 Want to learn more?
 

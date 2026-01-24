@@ -40,7 +40,6 @@ export async function cleanMarkdown(
 
         // 2. Unwrap Parent Nodes (Preserve children)
         const blockUnwrapTypes = ["heading", "blockquote"];
-        const inlineUnwrapTypes = ["emphasis", "strong", "link", "delete"];
 
         const shouldUnwrap =
           (options.removeHeading && node.type === "heading") ||
