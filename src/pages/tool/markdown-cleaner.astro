@@ -1,10 +1,10 @@
 ---
 import Layout from "../../layouts/layout.astro";
-import { MarkdownCleaner } from "../../modules/markdown-cleaner";
+import { MarkdownCleaner as MarkdownCleanerIsland } from "../../modules/markdown-cleaner";
 ---
 
 <Layout title="마크다운 서식 제거기 | Moya Tools">
-  <main class="min-h-screen py-10 bg-base-200">
-    <MarkdownCleaner client:load />
+  <main class="bg-base-200 min-h-screen py-10">
+    <MarkdownCleanerIsland client:load />
   </main>
 </Layout>

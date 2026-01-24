@@ -3,6 +3,7 @@
 **Project:** A modular monolith "Tools Site" built with **SolidJS**, **Astro**, and **DaisyUI**.
 **Goal:** Provide web-based solutions for usability gaps in AI tools (like ChatGPT, Gemini). The core value lies in the functional logic, which must be verifiable via TDD.
 **Architecture:**
+
 - Static Site Generation (SSG) with no server-side functions, authentication, or external APIs.
 - Modular monolith structure.
 - Strict separation of **Logic** and **UI** to enhance testability.
@@ -36,6 +37,7 @@ src/
 ```
 
 ### Modern Testing Stack Recommendations (Astro + SolidJS)
+
 To adhere to modern best practices and the specific needs of this stack:
 
 1. **Unit & Integration Testing: [Vitest](https://vitest.dev/)**
@@ -45,6 +47,13 @@ To adhere to modern best practices and the specific needs of this stack:
 3. **End-to-End (E2E) Testing: [Playwright](https://playwright.dev/)**
    - **Why:** Excellent for verifying the final SSG output and critical user flows in real browser environments.
 4. **UI Framework:** **DaisyUI** (Tailwind CSS) for consistent, rapid UI development.
+
+## UI Sizing Rules (DaisyUI/Tailwind)
+
+- Do not use `xs` size variants in UI components (e.g. `btn-xs`, `badge-xs`, `input-xs`, `text-xs`).
+- The minimum allowed size is `sm`; upgrade `*-xs` to `*-sm` and `text-xs` to `text-sm`.
+- This rule refers to component size variants, not responsive breakpoint prefixes like `xs:` (if present).
+- Do not use outline style variants (e.g. `btn-outline`, `badge-outline`); use the corresponding soft style (e.g. `btn-soft`, `badge-soft`).
 
 ---
 

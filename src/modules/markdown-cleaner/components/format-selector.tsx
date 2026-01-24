@@ -30,17 +30,17 @@ export const FormatSelector: Component<FormatSelectorProps> = (props) => {
   };
 
   return (
-    <div class="card bg-base-100 shadow-xl mb-6 border border-base-200">
+    <div class="card bg-base-100 border-base-200 mb-6 border shadow-xl">
       <div class="card-body p-6">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="card-title text-xl font-bold flex items-center gap-2">
+        <div class="mb-6 flex items-center justify-between">
+          <h2 class="card-title flex items-center gap-2 text-xl font-bold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6 text-primary"
+              class="text-primary h-6 w-6"
             >
               <path
                 stroke-linecap="round"
@@ -51,11 +51,14 @@ export const FormatSelector: Component<FormatSelectorProps> = (props) => {
             삭제할 서식 선택
           </h2>
           <div class="flex gap-2">
-            <button class="btn btn-sm btn-neutral" onClick={() => setAll(true)}>
+            <button
+              class="btn btn-sm btn-neutral"
+              onClick={() => setAll(true)}
+            >
               전체 선택
             </button>
             <button
-              class="btn btn-sm btn-outline"
+              class="btn btn-sm btn-soft"
               onClick={() => setAll(false)}
             >
               전체 해제
@@ -63,17 +66,17 @@ export const FormatSelector: Component<FormatSelectorProps> = (props) => {
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
           <For each={formatGroups}>
             {(group: FormatGroup) => (
               <div class="flex flex-col gap-3">
-                <h3 class="font-semibold text-lg text-base-content/70 border-b border-base-200 pb-2">
+                <h3 class="text-base-content/70 border-base-200 border-b pb-2 text-lg font-semibold">
                   {group.label}
                 </h3>
                 <div class="flex flex-col gap-2">
                   <For each={group.options}>
                     {(option: FormatOption) => (
-                      <label class="label cursor-pointer justify-start gap-3 hover:bg-base-200/50 p-2 rounded-lg transition-colors">
+                      <label class="label hover:bg-base-200/50 cursor-pointer justify-start gap-3 rounded-lg p-2 transition-colors">
                         <input
                           type="checkbox"
                           class="checkbox checkbox-primary checkbox-sm"

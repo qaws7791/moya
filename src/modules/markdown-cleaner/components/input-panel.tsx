@@ -75,17 +75,17 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
   };
 
   return (
-    <div class="card bg-base-100 shadow-xl border border-base-200 h-full flex flex-col">
-      <div class="card-body p-4 flex flex-col h-full gap-4">
-        <div class="flex justify-between items-center">
-          <h3 class="card-title text-lg flex items-center gap-2">
+    <div class="card bg-base-100 border-base-200 flex h-full flex-col border shadow-xl">
+      <div class="card-body flex h-full flex-col gap-4 p-4">
+        <div class="flex items-center justify-between">
+          <h3 class="card-title flex items-center gap-2 text-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5"
+              class="h-5 w-5"
             >
               <path
                 stroke-linecap="round"
@@ -105,7 +105,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
               onChange={handleFileInputChange}
             />
             <button
-              class="btn btn-xs btn-outline btn-secondary"
+              class="btn btn-sm btn-soft btn-secondary"
               onClick={() => fileInputRef?.click()}
               title="마크다운 파일 업로드"
             >
@@ -115,7 +115,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-4 h-4"
+                class="h-4 w-4"
               >
                 <path
                   stroke-linecap="round"
@@ -126,7 +126,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
               파일 업로드
             </button>
             <button
-              class="btn btn-xs btn-ghost"
+              class="btn btn-sm btn-ghost"
               onClick={() => {
                 props.onValueChange("");
                 setFileError(null);
@@ -134,7 +134,10 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
             >
               지우기
             </button>
-            <button class="btn btn-xs btn-primary" onClick={handlePaste}>
+            <button
+              class="btn btn-sm btn-primary"
+              onClick={handlePaste}
+            >
               붙여넣기
             </button>
           </div>
@@ -145,7 +148,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
           <div class="alert alert-error py-2 text-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="stroke-current shrink-0 h-5 w-5"
+              class="h-5 w-5 shrink-0 stroke-current"
               fill="none"
               viewBox="0 0 24 24"
             >
@@ -162,14 +165,14 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
 
         {/* Textarea with drag & drop support */}
         <div
-          class={`relative flex-1 ${isDragOver() ? "ring-2 ring-primary ring-offset-2 rounded-lg" : ""}`}
+          class={`relative flex-1 ${isDragOver() ? "ring-primary rounded-lg ring-2 ring-offset-2" : ""}`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
           {/* Drag overlay */}
           {isDragOver() && (
-            <div class="absolute inset-0 bg-primary/10 border-2 border-dashed border-primary rounded-lg flex items-center justify-center z-10 pointer-events-none">
+            <div class="bg-primary/10 border-primary pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-lg border-2 border-dashed">
               <div class="text-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +180,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-12 h-12 mx-auto text-primary mb-2"
+                  class="text-primary mx-auto mb-2 h-12 w-12"
                 >
                   <path
                     stroke-linecap="round"
@@ -193,7 +196,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
           )}
 
           <textarea
-            class="textarea textarea-bordered w-full h-full font-mono text-sm leading-relaxed resize-none focus:outline-none focus:border-primary/50"
+            class="textarea textarea-bordered focus:border-primary/50 h-full w-full resize-none font-mono text-sm leading-relaxed focus:outline-none"
             placeholder="여기에 마크다운을 붙여넣거나, .md 파일을 드래그앤드롭 하세요..."
             value={props.value}
             onInput={(e) => {
@@ -203,7 +206,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
           ></textarea>
         </div>
 
-        <div class="text-xs text-base-content/50 text-right">
+        <div class="text-base-content/50 text-right text-sm">
           {props.value.length.toLocaleString()} 자
         </div>
       </div>

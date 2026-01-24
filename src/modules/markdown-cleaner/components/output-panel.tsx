@@ -33,23 +33,23 @@ export const OutputPanel: Component<OutputPanelProps> = (props) => {
   };
 
   return (
-    <div class="card bg-base-100 shadow-xl border border-base-200 h-full flex flex-col">
-      <div class="card-body p-4 flex flex-col h-full gap-4 relative">
+    <div class="card bg-base-100 border-base-200 flex h-full flex-col border shadow-xl">
+      <div class="card-body relative flex h-full flex-col gap-4 p-4">
         <Show when={props.isLoading}>
-          <div class="absolute inset-0 bg-base-100/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-xl">
+          <div class="bg-base-100/50 absolute inset-0 z-10 flex items-center justify-center rounded-xl backdrop-blur-sm">
             <span class="loading loading-spinner loading-lg text-primary"></span>
           </div>
         </Show>
 
-        <div class="flex justify-between items-center">
-          <h3 class="card-title text-lg flex items-center gap-2">
+        <div class="flex items-center justify-between">
+          <h3 class="card-title flex items-center gap-2 text-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5"
+              class="h-5 w-5"
             >
               <path
                 stroke-linecap="round"
@@ -61,14 +61,14 @@ export const OutputPanel: Component<OutputPanelProps> = (props) => {
           </h3>
           <div class="flex gap-2">
             <button
-              class="btn btn-xs btn-outline"
+              class="btn btn-sm btn-soft"
               onClick={handleDownload}
               disabled={!props.value}
             >
               다운로드
             </button>
             <button
-              class={`btn btn-xs ${copied() ? "btn-success text-white" : "btn-primary"}`}
+              class={`btn btn-sm ${copied() ? "btn-success text-white" : "btn-primary"}`}
               onClick={handleCopy}
               disabled={!props.value}
             >
@@ -78,12 +78,12 @@ export const OutputPanel: Component<OutputPanelProps> = (props) => {
         </div>
 
         <textarea
-          class="textarea textarea-bordered w-full flex-1 font-mono text-sm leading-relaxed resize-none focus:outline-none bg-base-50"
+          class="textarea textarea-bordered bg-base-50 w-full flex-1 resize-none font-mono text-sm leading-relaxed focus:outline-none"
           placeholder="결과가 여기에 표시됩니다..."
           value={props.value}
           readOnly
         ></textarea>
-        <div class="text-xs text-base-content/50 text-right">
+        <div class="text-base-content/50 text-right text-sm">
           {props.value.length.toLocaleString()} 자
         </div>
       </div>

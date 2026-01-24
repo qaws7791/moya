@@ -46,9 +46,9 @@ export const MarkdownCleaner: Component = () => {
   });
 
   return (
-    <div class="container mx-auto p-4 max-w-7xl">
-      <div class="text-center mb-10">
-        <h1 class="text-4xl font-extrabold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+    <div class="container mx-auto max-w-7xl p-4">
+      <div class="mb-10 text-center">
+        <h1 class="from-primary to-secondary mb-2 bg-gradient-to-r bg-clip-text text-4xl font-extrabold text-transparent">
           Markdown Cleaner
         </h1>
         <p class="text-base-content/60 text-lg">
@@ -56,16 +56,22 @@ export const MarkdownCleaner: Component = () => {
         </p>
       </div>
 
-      <FormatSelector options={options()} onOptionsChange={setOptions} />
+      <FormatSelector
+        options={options()}
+        onOptionsChange={setOptions}
+      />
 
       {/* Main Content Area - Responsive Grid */}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[600px]">
+      <div class="grid h-[600px] grid-cols-1 gap-6 lg:grid-cols-2">
         <InputPanel
           value={input()}
           onValueChange={setInput}
           isLoading={loading()}
         />
-        <OutputPanel value={output()} isLoading={loading()} />
+        <OutputPanel
+          value={output()}
+          isLoading={loading()}
+        />
       </div>
     </div>
   );
