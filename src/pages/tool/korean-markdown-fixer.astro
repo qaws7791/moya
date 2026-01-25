@@ -1,0 +1,10 @@
+---
+import Layout from "../../layouts/layout.astro";
+import { FixerUI } from "../../modules/korean-markdown-fixer";
+---
+
+<Layout title="한국어 마크다운 교정기 | Moya Tools">
+  <main class="bg-base-200 min-h-screen py-10">
+    <FixerUI client:load />
+  </main>
+</Layout>
