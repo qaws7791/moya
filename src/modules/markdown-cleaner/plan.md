@@ -5,6 +5,7 @@
 AI(Gemini, Claude, ChatGPT 등)가 생성한 마크다운 문서에서 **특정 서식을 선택적으로 제거**하는 웹 기반 도구입니다.
 
 ### 핵심 요구사항
+
 - 마크다운의 모든 서식을 개별 또는 다중 선택하여 제거 가능
 - 10만자 이상의 대용량 문서도 멈춤 없이 처리
 - 심플하고 직관적인 UI (상단: 서식 선택, 좌측: 입력, 우측: 결과)
@@ -15,15 +16,16 @@ AI(Gemini, Claude, ChatGPT 등)가 생성한 마크다운 문서에서 **특정 
 
 ### 마크다운 파싱 라이브러리: **Unified + Remark 생태계**
 
-| 패키지 | 용도 |
-|--------|------|
-| `unified` | 텍스트 처리 파이프라인 코어 |
-| `remark-parse` | 마크다운 → AST(mdast) 파싱 |
-| `remark-stringify` | AST(mdast) → 마크다운 직렬화 |
-| `remark-gfm` | GFM(GitHub Flavored Markdown) 지원 |
-| `unist-util-visit` | AST 노드 순회 및 조작 |
+| 패키지             | 용도                               |
+| ------------------ | ---------------------------------- |
+| `unified`          | 텍스트 처리 파이프라인 코어        |
+| `remark-parse`     | 마크다운 → AST(mdast) 파싱         |
+| `remark-stringify` | AST(mdast) → 마크다운 직렬화       |
+| `remark-gfm`       | GFM(GitHub Flavored Markdown) 지원 |
+| `unist-util-visit` | AST 노드 순회 및 조작              |
 
 **선정 이유:**
+
 1. **신뢰성**: Unified 생태계는 High reputation, 풍부한 코드 스니펫(remark: 39개, remark-gfm: 11개)
 2. **브라우저 호환성**: ESM 지원, 브라우저에서 직접 import 가능
 3. **AST 조작**: 노드 타입별로 정밀하게 제거 가능 (visit 함수 사용)
@@ -34,6 +36,7 @@ AI(Gemini, Claude, ChatGPT 등)가 생성한 마크다운 문서에서 **특정 
 ## 📐 아키텍처 설계
 
 ### 폴더 구조
+
 ```
 src/modules/markdown-cleaner/
 ├── core/                      # 순수 비즈니스 로직 (프레임워크 독립)
@@ -50,6 +53,7 @@ src/modules/markdown-cleaner/
 ```
 
 ### 레이어 분리
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    UI Layer (SolidJS)                       │
@@ -75,51 +79,56 @@ src/modules/markdown-cleaner/
 ## 🎯 제거 가능한 마크다운 서식 (mdast 노드 타입)
 
 ### 블록 레벨
-| 서식 | 노드 타입 | 설명 | 예시 |
-|------|-----------|------|------|
-| 제목 | `heading` | h1~h6 제목 | `# Heading` |
-| 인용문 | `blockquote` | 인용구 블록 | `> quote` |
-| 코드 블록 | `code` | 펜스 코드 블록 | ` ```js ``` ` |
-| 목록 | `list` | 순서/비순서 목록 | `- item`, `1. item` |
-| 구분선 | `thematicBreak` | 수평선 | `---` |
-| 테이블 (GFM) | `table` | 표 | `| a | b |` |
+
+| 서식         | 노드 타입       | 설명             | 예시                |
+| ------------ | --------------- | ---------------- | ------------------- | --- | --- | --- |
+| 제목         | `heading`       | h1~h6 제목       | `# Heading`         |
+| 인용문       | `blockquote`    | 인용구 블록      | `> quote`           |
+| 코드 블록    | `code`          | 펜스 코드 블록   | ` ```js ``` `       |
+| 목록         | `list`          | 순서/비순서 목록 | `- item`, `1. item` |
+| 구분선       | `thematicBreak` | 수평선           | `---`               |
+| 테이블 (GFM) | `table`         | 표               | `                   | a   | b   | `   |
 
 ### 인라인 레벨
-| 서식 | 노드 타입 | 설명 | 예시 |
-|------|-----------|------|------|
-| 강조 (이탤릭) | `emphasis` | 기울임체 | `*italic*` |
-| 굵게 | `strong` | 볼드체 | `**bold**` |
-| 인라인 코드 | `inlineCode` | 인라인 코드 | `` `code` `` |
-| 링크 | `link` | 하이퍼링크 | `[text](url)` |
-| 이미지 | `image` | 이미지 | `![alt](src)` |
-| 취소선 (GFM) | `delete` | 취소선 | `~~strike~~` |
-| 줄바꿈 | `break` | 강제 줄바꿈 | `line<br>break` |
+
+| 서식          | 노드 타입    | 설명        | 예시            |
+| ------------- | ------------ | ----------- | --------------- |
+| 강조 (이탤릭) | `emphasis`   | 기울임체    | `*italic*`      |
+| 굵게          | `strong`     | 볼드체      | `**bold**`      |
+| 인라인 코드   | `inlineCode` | 인라인 코드 | `` `code` ``    |
+| 링크          | `link`       | 하이퍼링크  | `[text](url)`   |
+| 이미지        | `image`      | 이미지      | `![alt](src)`   |
+| 취소선 (GFM)  | `delete`     | 취소선      | `~~strike~~`    |
+| 줄바꿈        | `break`      | 강제 줄바꿈 | `line<br>break` |
 
 ### 참조 정의
-| 서식 | 노드 타입 | 설명 | 예시 |
-|------|-----------|------|------|
-| 링크 참조 | `linkReference` | 참조 링크 | `[text][ref]` |
-| 이미지 참조 | `imageReference` | 참조 이미지 | `![alt][ref]` |
-| 정의 | `definition` | 참조 정의 | `[ref]: url` |
-| 각주 참조 (GFM) | `footnoteReference` | 각주 참조 | `[^1]` |
-| 각주 정의 (GFM) | `footnoteDefinition` | 각주 정의 | `[^1]: note` |
+
+| 서식            | 노드 타입            | 설명        | 예시          |
+| --------------- | -------------------- | ----------- | ------------- |
+| 링크 참조       | `linkReference`      | 참조 링크   | `[text][ref]` |
+| 이미지 참조     | `imageReference`     | 참조 이미지 | `![alt][ref]` |
+| 정의            | `definition`         | 참조 정의   | `[ref]: url`  |
+| 각주 참조 (GFM) | `footnoteReference`  | 각주 참조   | `[^1]`        |
+| 각주 정의 (GFM) | `footnoteDefinition` | 각주 정의   | `[^1]: note`  |
 
 ### HTML
-| 서식 | 노드 타입 | 설명 | 예시 |
-|------|-----------|------|------|
-| HTML | `html` | 인라인 HTML | `<div>...</div>` |
+
+| 서식 | 노드 타입 | 설명        | 예시             |
+| ---- | --------- | ----------- | ---------------- |
+| HTML | `html`    | 인라인 HTML | `<div>...</div>` |
 
 ---
 
 ## 🔧 핵심 구현 로직
 
 ### 1. cleanMarkdown 함수
+
 ```typescript
-import { unified } from 'unified';
-import remarkParse from 'remark-parse';
-import remarkGfm from 'remark-gfm';
-import remarkStringify from 'remark-stringify';
-import { visit, SKIP } from 'unist-util-visit';
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
+import remarkStringify from "remark-stringify";
+import { visit, SKIP } from "unist-util-visit";
 
 export interface CleanerOptions {
   removeHeading?: boolean;
@@ -141,7 +150,7 @@ export interface CleanerOptions {
 
 export async function cleanMarkdown(
   markdown: string,
-  options: CleanerOptions
+  options: CleanerOptions,
 ): Promise<string> {
   const processor = unified()
     .use(remarkParse)
@@ -161,19 +170,20 @@ export async function cleanMarkdown(
 ### 2. 노드 제거 전략
 
 **두 가지 방식:**
+
 1. **완전 제거**: 노드 자체를 삭제 (예: 구분선, 테이블)
 2. **언랩(Unwrap)**: 서식만 제거하고 텍스트 내용 보존 (예: 강조, 링크)
 
 ```typescript
 // 예: 링크 제거 (텍스트는 보존)
-if (node.type === 'link' && options.removeLink) {
+if (node.type === "link" && options.removeLink) {
   // [text](url) → text
   parent.children.splice(index, 1, ...node.children);
   return [SKIP, index];
 }
 
 // 예: 목록 제거 (내용물도 제거)
-if (node.type === 'list' && options.removeList) {
+if (node.type === "list" && options.removeList) {
   parent.children.splice(index, 1);
   return [SKIP, index];
 }
@@ -188,7 +198,7 @@ if (node.type === 'list' && options.removeList) {
 1. **비동기 처리**: `async/await` 사용으로 메인 스레드 블로킹 방지
 2. **디바운싱**: 입력 시 300ms 디바운스 적용
 3. **프로그레시브 UI**: 처리 중 로딩 인디케이터 표시
-4. **Web Worker 고려사항**: 
+4. **Web Worker 고려사항**:
    - 초기 버전에서는 메인 스레드에서 처리
    - 성능 이슈 발생 시 Web Worker로 이전 가능 (unified는 브라우저 호환)
 
@@ -207,6 +217,7 @@ const debouncedClean = debounce(async (input: string) => {
 ## 🎨 UI 설계
 
 ### 레이아웃
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        Format Selector                          │
@@ -234,6 +245,7 @@ const debouncedClean = debounce(async (input: string) => {
 ```
 
 ### DaisyUI 컴포넌트 활용
+
 - `checkbox` / `radio`: 서식 선택
 - `textarea`: 입력/출력 영역
 - `btn`: 액션 버튼들
@@ -245,6 +257,7 @@ const debouncedClean = debounce(async (input: string) => {
 ## 📝 TDD 테스트 계획
 
 ### Phase 1: Core 로직 테스트
+
 - [ ] 1.1 빈 문자열 입력 시 빈 문자열 반환
 - [ ] 1.2 옵션 없이 호출 시 원본 그대로 반환
 - [ ] 1.3 단일 서식 제거 (emphasis)
@@ -264,16 +277,19 @@ const debouncedClean = debounce(async (input: string) => {
 - [ ] 1.17 단일 서식 제거 (footnote)
 
 ### Phase 2: 복합 테스트
+
 - [ ] 2.1 다중 서식 동시 제거
 - [ ] 2.2 중첩 서식 처리 (`***bold italic***`)
 - [ ] 2.3 특수 문자 포함 텍스트 처리
 - [ ] 2.4 GFM 확장 문법 처리
 
 ### Phase 3: 성능 테스트
+
 - [ ] 3.1 대용량 문서(10만자) 처리 시간 측정
 - [ ] 3.2 메모리 사용량 확인
 
 ### Phase 4: UI 테스트
+
 - [ ] 4.1 서식 체크박스 토글 동작
 - [ ] 4.2 전체 선택/해제 동작
 - [ ] 4.3 입력 → 출력 실시간 반영

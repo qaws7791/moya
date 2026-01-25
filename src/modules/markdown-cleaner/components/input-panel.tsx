@@ -75,7 +75,7 @@ export const InputPanel: Component<InputPanelProps> = (props) => {
   };
 
   return (
-    <div class="card bg-base-100 border-base-200 flex h-full flex-col border shadow-xl">
+    <div class="card bg-base-100 border-base-200 flex h-full flex-col border">
       <div class="card-body flex h-full flex-col gap-4 p-4">
         <div class="flex items-center justify-between">
           <h3 class="card-title flex items-center gap-2 text-lg">

@@ -33,7 +33,7 @@ export const OutputPanel: Component<OutputPanelProps> = (props) => {
   };
 
   return (
-    <div class="card bg-base-100 border-base-200 flex h-full flex-col border shadow-xl">
+    <div class="card bg-base-100 border-base-200 flex h-full flex-col border">
       <div class="card-body relative flex h-full flex-col gap-4 p-4">
         <Show when={props.isLoading}>
           <div class="bg-base-100/50 absolute inset-0 z-10 flex items-center justify-center rounded-xl backdrop-blur-sm">

@@ -30,7 +30,7 @@ export const FormatSelector: Component<FormatSelectorProps> = (props) => {
   };
 
   return (
-    <div class="card bg-base-100 border-base-200 mb-6 border shadow-xl">
+    <div class="card bg-base-100 border-base-200 mb-6 border">
       <div class="card-body p-6">
         <div class="mb-6 flex items-center justify-between">
           <h2 class="card-title flex items-center gap-2 text-xl font-bold">
