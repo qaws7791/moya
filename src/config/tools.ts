@@ -33,4 +33,13 @@ export const tools: Tool[] = [
     color: "secondary",
     emoji: "🇰🇷",
   },
+  {
+    id: "filename-sanitizer",
+    name: "Filename Sanitizer",
+    description:
+      "텍스트에서 OS가 허용하지 않는 문자를 제거하여 안전한 파일 이름을 만듭니다.",
+    href: "/tool/filename-sanitizer",
+    color: "accent",
+    emoji: "🗂️",
+  },
 ];
