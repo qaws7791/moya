@@ -30,16 +30,16 @@ describe("cleanMarkdown", () => {
     expect(result.trim()).toBe(expected);
   });
 
-  it("should remove link but keep text when removeLink is true", async () => {
+  it("should remove link entirely when removeLink is true", async () => {
     const input = "Click [here](https://example.com) to go.";
-    const expected = "Click here to go.";
+    const expected = "Click to go.";
     const result = await cleanMarkdown(input, { removeLink: true });
     expect(result.trim()).toBe(expected);
   });
 
   it("should remove image when removeImage is true", async () => {
     const input = "Look at this ![alt text](image.png).";
-    const expected = "Look at this .";
+    const expected = "Look at this.";
     const result = await cleanMarkdown(input, { removeImage: true });
     expect(result.trim()).toBe(expected);
   });
@@ -153,7 +153,7 @@ describe("cleanMarkdown - Complex Cases", () => {
     const input =
       "# Title\n\nSome **bold** and *italic* text with [link](url).";
     // Remove heading, strong, emphasis, link
-    const expected = "Title\n\nSome bold and italic text with link.";
+    const expected = "Title\n\nSome bold and italic text with.";
     const result = await cleanMarkdown(input, {
       removeHeading: true,
       removeStrong: true,
@@ -166,20 +166,20 @@ describe("cleanMarkdown - Complex Cases", () => {
   it("should handle nested formatting (Bold inside Link)", async () => {
     const input = "Click [**Here**](url)";
 
-    // Case 1: Remove Link only -> "Click **Here**"
+    // Case 1: Remove Link only -> link entirely removed, trailing space remains
     const res1 = await cleanMarkdown(input, { removeLink: true });
-    expect(res1.trim()).toBe("Click **Here**");
+    expect(res1.trim()).toBe("Click");
 
     // Case 2: Remove Strong only -> "Click [Here](url)"
     const res2 = await cleanMarkdown(input, { removeStrong: true });
     expect(res2.trim()).toBe("Click [Here](url)");
 
-    // Case 3: Remove Both -> "Click Here"
+    // Case 3: Remove Both -> link deleted first, so strong inside is gone too
     const res3 = await cleanMarkdown(input, {
       removeLink: true,
       removeStrong: true,
     });
-    expect(res3.trim()).toBe("Click Here");
+    expect(res3.trim()).toBe("Click");
   });
 
   it("should handle nested formatting (List with Bold and Code)", async () => {

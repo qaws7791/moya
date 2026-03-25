@@ -31,9 +31,44 @@ export async function cleanMarkdown(
           (node.type === "html" && options.removeHtml) ||
           (node.type === "break" && options.removeBreak) ||
           (node.type === "footnoteDefinition" && options.removeFootnote) ||
-          (node.type === "footnoteReference" && options.removeFootnote);
+          (node.type === "footnoteReference" && options.removeFootnote) ||
+          (node.type === "link" && options.removeLink);
 
         if (shouldDelete) {
+          // Clean up adjacent whitespace for inline nodes (link, image)
+          // to avoid orphaned spaces after removal
+          const isInlineDelete =
+            node.type === "link" || node.type === "image";
+
+          if (isInlineDelete) {
+            const prevSibling = index > 0 ? p.children[index - 1] : null;
+            const nextSibling =
+              index + 1 < p.children.length ? p.children[index + 1] : null;
+            const hasPrevText =
+              prevSibling &&
+              (prevSibling as any).type === "text" &&
+              typeof (prevSibling as Literal).value === "string";
+            const hasNextText =
+              nextSibling &&
+              (nextSibling as any).type === "text" &&
+              typeof (nextSibling as Literal).value === "string";
+
+            if (hasPrevText && hasNextText) {
+              // Both sides have text: trim trailing from prev only
+              (prevSibling as Literal).value = (
+                (prevSibling as Literal).value as string
+              ).trimEnd();
+            } else if (hasPrevText) {
+              (prevSibling as Literal).value = (
+                (prevSibling as Literal).value as string
+              ).trimEnd();
+            } else if (hasNextText) {
+              (nextSibling as Literal).value = (
+                (nextSibling as Literal).value as string
+              ).trimStart();
+            }
+          }
+
           p.children.splice(index, 1);
           return [SKIP, index];
         }
@@ -46,7 +81,6 @@ export async function cleanMarkdown(
           (options.removeBlockquote && node.type === "blockquote") ||
           (options.removeEmphasis && node.type === "emphasis") ||
           (options.removeStrong && node.type === "strong") ||
-          (options.removeLink && node.type === "link") ||
           (options.removeDelete && node.type === "delete");
 
         if (shouldUnwrap) {
